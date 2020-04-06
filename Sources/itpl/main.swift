@@ -22,7 +22,7 @@ import iTunesLibrary
 var itl = try ITLibrary(apiVersion: "*")
 
 extension String {
-	// Escape Characters
+	// Escape characters
 	func escapeChar() -> String {
 		// Escape List: double quote, single quote, space, etc.
 		let escapeCharList = "\"`'()[]<>&?$*|\\ "
@@ -55,6 +55,16 @@ extension String {
 		//let nsStr = NSString(string: self)
 		return NSString(string: self).precomposedStringWithCanonicalMapping
 	}
+
+	// Encapsulate in double quote
+	func quoteDouble() -> String {
+		return "\"\(self)\""
+	}
+
+	// Encapsulate in single quote
+	func quoteSingle() -> String {
+		return "\'\(self)\'"
+	}
 }
 
 // Options:
@@ -73,7 +83,7 @@ struct ItplOptions: ParsableArguments {
 		"Remove base path from item path output.",
 		discussion: "Path output in full if it does not contain the provided base path.",
 		valueName: "base path"))
-	var basePath: String
+	var basePath: String?
 
 	@Option(name:.customShort("p"),default:"",help:ArgumentHelp("Add prefix string to each line.", valueName: "prefix"))
 	var prefixStr: String
@@ -152,8 +162,8 @@ func printPlaylistItems(name: String) {
 							path = path.nfc()
 						}
 
-						if options.basePath.count > 0 {
-							path = path.removeBasePath(basePath: options.basePath)
+						if options.basePath != nil {
+							path = path.removeBasePath(basePath: options.basePath!)
 						}
 
 						if options.escapeChar {
@@ -161,11 +171,11 @@ func printPlaylistItems(name: String) {
 						}
 
 						if options.quoteDouble {
-							path = "\"\(path)\""
+							path = path.quoteDouble()
 						}
 
 						if options.quoteSingle {
-							path = "\'\(path)\'"
+							path = path.quoteSingle()
 						}
 
 						print(options.prefixStr + path)
