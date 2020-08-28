@@ -79,31 +79,33 @@ extension String {
 // --qs Path in single quote
 // play list name
 struct ItplOptions: ParsableArguments {
-	@Option(name:.customShort("r"),default:"",help:ArgumentHelp(
-		"Remove base path from item path output.",
-		discussion: "Path output in full if it does not contain the provided base path.",
-		valueName: "base path"))
+	@Option(
+		name: .customShort("r"),
+		help: ArgumentHelp(
+			"Remove base path from item path output.",
+			discussion: "Path output in full if it does not contain the provided base path.",
+			valueName: "base path"))
 	var basePath: String?
 
-	@Option(name:.customShort("p"),default:"",help:ArgumentHelp("Add prefix string to each line.", valueName: "prefix"))
-	var prefixStr: String
+	@Option(name: .customShort("p"), help: ArgumentHelp("Add prefix string to each line.", valueName: "prefix"))
+	var prefixStr = ""
 
-	@Flag(name:.customShort("e"),help:"Escape format.")
-	var escapeChar: Bool
+	@Flag(name: .customShort("e"), help: "Escape format.")
+	var escapeChar = false
 
-	@Flag(name:.customShort("n"),help:"Encode path in NFC(Linux) encoding.")
-	var nfc: Bool
+	@Flag(name: .customShort("n"), help: "Encode path in NFC(Linux) encoding.")
+	var nfc = false
 
-	@Flag(name:.customLong("qd"),help:"Path in double quote.")
-	var quoteDouble: Bool
+	@Flag(name: .customLong("qd"), help: "Path in double quote.")
+	var quoteDouble = false
 
-	@Flag(name:.customLong("qs"),help:"Path in single quote.")
-	var quoteSingle: Bool
+	@Flag(name: .customLong("qs"), help: "Path in single quote.")
+	var quoteSingle = false
 
-	@Flag(name:.customShort("d"),help:"Debug mode.")
-	var debug: Bool
+	@Flag(name: .customShort("d"), help: "Debug mode.")
+	var debug = false
 
-	@Argument(help:ArgumentHelp("Play list name", discussion: "List all play list if no name is provided."))
+	@Argument(help: ArgumentHelp("Play list name", discussion: "List all play list if no name is provided."))
 	var name: String?
 }
 
