@@ -1,6 +1,20 @@
 # iTPL [![Paypal donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/donate/?business=HZF49NM9D35SJ&no_recurring=0&currency_code=CAD)
 
 `itpl` (iTunes PlayList in short) is a command line tool to export iTunes playlist with various options.
+<!-- TOC -->
+
+- [Features](#features)
+- [Install](#install)
+- [Usage](#usage)
+  - [M3U Playlist](#m3u-playlist)
+  - [Other Examples](#other-examples)
+- [Repository](#repository)
+- [Contributors](#contributors)
+- [Changelog](#changelog)
+- [License](#license)
+
+<!-- /TOC -->
+<!--more-->
 
 ### Features
 
