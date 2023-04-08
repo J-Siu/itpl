@@ -1,4 +1,4 @@
-# iTPL [![Paypal donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/donate/?business=HZF49NM9D35SJ&no_recurring=0&currency_code=CAD)
+## iTPL [![Paypal donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/donate/?business=HZF49NM9D35SJ&no_recurring=0&currency_code=CAD)
 
 `itpl` (iTunes PlayList in short) is a command line tool to export iTunes playlist with various options.
 <!-- TOC -->
@@ -35,7 +35,7 @@ cd itpl
 swift build -c release
 
 # Copy binary to /usr/local/bin
-cp .build/x86_64-apple-macosx/release/itpl /usr/local/bin/
+cp .build/release/itpl /usr/local/bin/
 ```
 
 ### Usage
@@ -153,12 +153,14 @@ ls -lh iTunes/iTunes\ Media/Music/U2/Songs\ of\ Innocence/11\ The\ Troubles.m4a
   - Add GitHub workflow
   - Remove test
   - Update swift-argument-parser to 0.3.0
+- 1.0.2
+  - Update swift-argument-parser to 0.5.0
 
 ### License
 
 The MIT License
 
-Copyright (c) 2020
+Copyright (c) 2023
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
