@@ -23,12 +23,12 @@ jobs:
       - name: Zip
         id: zip
         run: |
-          TAG=${GITHUB_REF/refs\/tags\//}
-          ZIP_NAME=itpl-${TAG}.zip
-          ZIP_PATH=./${ZIP_NAME}
-          echo ${TAG}
-          echo ${ZIP_NAME}
-          echo ${ZIP_PATH}
+          TAG="${GITHUB_REF/refs\/tags\//}"
+          ZIP_NAME="itpl-${TAG}.zip"
+          ZIP_PATH="./${ZIP_NAME}"
+          echo "TAG=${TAG}"
+          echo "ZIP_NAME=${ZIP_NAME}"
+          echo "ZIP_PATH=${ZIP_PATH}"
           zip -j ${ZIP_NAME} .build/release/itpl
           echo "name=name::${ZIP_NAME}" >> $GITHUB_OUTPUT
           echo "name=path::${ZIP_PATH}" >> $GITHUB_OUTPUT
