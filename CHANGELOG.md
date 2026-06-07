@@ -1,0 +1,11 @@
+- 1.0
+  - Initial release
+- 1.0.1
+  - Add GitHub workflow
+  - Remove test
+  - Update swift-argument-parser to 0.3.0
+- 1.0.2
+  - Update swift-argument-parser to 0.5.0
+- v1.1.0
+  - update to swift 6.3
+  - refactor inti item, items struct

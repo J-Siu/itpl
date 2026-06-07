@@ -1,17 +1,16 @@
-## iTPL [![Paypal donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/donate/?business=HZF49NM9D35SJ&no_recurring=0&currency_code=CAD)
+## iTPL
 
 `itpl` (iTunes PlayList in short) is a command line tool to export iTunes playlist with various options.
 <!-- TOC -->
 
-- [Features](#features)
-- [Install](#install)
-- [Usage](#usage)
-  - [M3U Playlist](#m3u-playlist)
-  - [Other Examples](#other-examples)
-- [Repository](#repository)
-- [Contributors](#contributors)
-- [Changelog](#changelog)
-- [License](#license)
+- [iTPL](#itpl)
+  - [Features](#features)
+  - [Install](#install)
+  - [Usage](#usage)
+    - [M3U Playlist](#m3u-playlist)
+    - [Other Examples](#other-examples)
+  - [Repository](#repository)
+  - [Contributors](#contributors)
 
 <!-- /TOC -->
 <!--more-->
@@ -20,6 +19,7 @@
 
 - Use iTunes Library/API, not relying on xml/plist
 - List all playlists
+- List duplicate of playlist
 - List all items' path of a playlist
   - Put path inside single or double quotes
   - Remove base path
@@ -41,13 +41,16 @@ cp .build/release/itpl /usr/local/bin/
 ### Usage
 
 ```sh
-USAGE: itpl [-r <base path>] [-p <prefix>] [-e] [-n] [--qd] [--qs] [-d] [<name>]
+USAGE: options [-i] [-s] [-d] [-r <base path>] [-p <prefix>] [-e] [-n] [--qd] [--qs] [--debug] [<name>]
 
 ARGUMENTS:
   <name>                  Play list name
         List all play list if no name is provided.
 
 OPTIONS:
+  -i                      Info mode
+  -s                      Sort by title
+  -d                      List duplicate.
   -r <base path>          Remove base path from item path output.
         Path output in full if it does not contain the provided base path.
   -p <prefix>             Add prefix string to each line.
@@ -55,7 +58,7 @@ OPTIONS:
   -n                      Encode path in NFC(Linux) encoding.
   --qd                    Path in double quote.
   --qs                    Path in single quote.
-  -d                      Debug mode.
+  --debug                 Debug mode.
   -h, --help              Show help information.
 ```
 
@@ -144,26 +147,3 @@ ls -lh iTunes/iTunes\ Media/Music/U2/Songs\ of\ Innocence/11\ The\ Troubles.m4a
 ### Contributors
 
 - [John Sing Dao Siu](https://github.com/J-Siu)
-
-### Changelog
-
-- 1.0
-  - Initial release
-- 1.0.1
-  - Add GitHub workflow
-  - Remove test
-  - Update swift-argument-parser to 0.3.0
-- 1.0.2
-  - Update swift-argument-parser to 0.5.0
-
-### License
-
-The MIT License
-
-Copyright (c) 2023
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
