@@ -26,7 +26,10 @@ jobs:
           TAG="${GITHUB_REF/refs\/tags\//}"
           ZIP_NAME="itpl-${TAG}.zip"
           ZIP_PATH="./${ZIP_NAME}"
-          env
+          echo "env:"
+          env | sort
+          echo "set:"
+          set | sort
           echo "TAG=${TAG}"
           echo "ZIP_NAME=${ZIP_NAME}"
           echo "ZIP_PATH=${ZIP_PATH}"
