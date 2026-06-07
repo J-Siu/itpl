@@ -34,8 +34,8 @@ jobs:
           echo "ZIP_PATH=${ZIP_PATH}"
           echo "ls: $(ls -l .build/release/itpl)"
           zip -j ${ZIP_NAME} .build/release/itpl
-          echo "name=name::${ZIP_NAME}" >> $GITHUB_OUTPUT
-          echo "name=path::${ZIP_PATH}" >> $GITHUB_OUTPUT
+          echo "name=${ZIP_NAME}" >> $GITHUB_OUTPUT
+          echo "path=${ZIP_PATH}" >> $GITHUB_OUTPUT
 
       - name: Release - Create
         id: create_release
