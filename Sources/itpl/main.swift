@@ -17,7 +17,8 @@ if opts.name == nil {  // all playlists
 } else {
 	itLib.allPlaylists.forEach { pl in
 		if pl.name.lowercased() == opts.name?.lowercased() {
-			print((Items(opts: opts, playlist: pl)).description.trim())
+			Items(opts: opts, playlist: pl).items.forEach({ i in if i.description.count > 0 { print(i) } }
+			)
 		}
 	}
 }
