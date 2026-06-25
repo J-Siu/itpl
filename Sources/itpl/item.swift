@@ -1,14 +1,32 @@
 import iTunesLibrary
 
-//
+// An ITLibMediaItem wrapper support output option
 struct Item {
-	var opts: Options
 	var item: ITLibMediaItem
-	var path: String = ""
+	var opts: Options
+
+	// `get` only
+	var artist: String { return item.artist?.name ?? "" }
+	var bitrate: Int { return item.bitrate }
+	var fileSize: String {
+		return
+			"\((Double(item.fileSize) / 1024 / 1024).formatted(.number.precision(.fractionLength(1))))M"
+	}
+	var path: String { return formatPath(item.location?.path ?? "") }
+	// var persistentID: NSNumber { return item.persistentID }
+	var persistentID: String {
+		return String(UInt(item.persistentID.uint64Value), radix: 16, uppercase: true)
+	}
+	// var persistentID: String { return String(UInt(item.persistentID.uintValue), radix: 16, uppercase: true) }
+	// var persistentID: String { return String(format: "%016lX", item.persistentID.uint64Value) }
+	// var persistentID: String { return String(format: "%016lX", item.persistentID.uintValue) }
+	// var persistentID: String { return String(item.persistentID.uint64Value, radix: 16, uppercase: true) }
+	// var persistentID: String { return String(item.persistentID.uintValue, radix: 16, uppercase: true) }
+	var title: String { return item.title }
+
 	init(opts: Options, item: ITLibMediaItem) {
-		self.opts = opts
 		self.item = item
-		self.path = formatPath(item.location!.path)
+		self.opts = opts
 	}
 
 	// format filepath base on option
@@ -41,30 +59,30 @@ extension Item: CustomStringConvertible {
 	}
 
 	// for .m3u playlist
-	private func toStrPathOnly() -> String {
-		return path
-	}
+	private func toStrPathOnly() -> String { return path }
 
 	private func toStrInfo() -> String {
-		var str = ""
-		str += "\(item.title) | "
-		str +=
-			"\((Double(item.fileSize) / 1024 / 1024).formatted(.number.precision(.fractionLength(1))))M | "
-		str += "\(item.bitrate) | "
-		str += path
-		return str
+		return ""
+			+ "\(title) | "
+			+ "\(fileSize) | "
+			+ "\(bitrate) | "
+			+ "\(persistentID) | "
+			+ "\(artist) | "
+			+ path
 	}
 
 	private func toStrDebug() -> String {
-		var str = ""
-		str += "# ---\n"
-		str += "# Title    : " + item.title + "\n"
-		str += "# Kind     : " + item.kind! + "\n"
+		var str =
+			""
+			+ "# ---\n"
+			+ "# Title    : " + title + "\n"
+			+ "# Kind     : " + (item.kind ?? "") + "\n"
 		if item.location != nil {
 			let loc = item.location!
-			str += "# Scheme   : " + loc.scheme! + "\n"
-			str += "# Loc(STR) : " + loc.absoluteString + "\n"
-			str += "# Path     : " + loc.path + "\n"
+			str +=
+				"# Scheme   : " + loc.scheme! + "\n"
+				+ "# Loc(STR) : " + loc.absoluteString + "\n"
+				+ "# Path     : " + loc.path + "\n"
 			var pathComponents = ""
 			for p in loc.pathComponents {
 				pathComponents += "|" + p
@@ -77,22 +95,28 @@ extension Item: CustomStringConvertible {
 }
 
 struct Items {
-	var opts: Options
 	var items: [Item] = []
+	var opts: Options
 
 	init(opts: Options, playlist: ITLibPlaylist) {
 		self.opts = opts
-		var tmp = playlist.items
 		var out: [Item] = []
+		var tmp = playlist.items
 		if opts.duplicate || opts.sort {
 			tmp = playlist.items.sorted(by: { lhs, rhs in lhs.title < rhs.title })
 		}
 		let count = tmp.count
 		for i in 0..<count {
-			if !opts.duplicate || (i > 0 && tmp[i].title == tmp[i - 1].title)
+			if !opts.duplicate
+				|| (i > 0 && tmp[i].title == tmp[i - 1].title)
 				|| (i < count - 1 && tmp[i].title == tmp[i + 1].title)
 			{
-				out.append(Item(opts: opts, item: tmp[i]))
+				let item = Item(opts: opts, item: tmp[i])
+				if !(opts.notFound
+					&& (item.path == "" || FileManager.default.fileExists(atPath: item.path)))
+				{
+					out.append(item)
+				}
 			}
 		}
 		items = out
@@ -103,7 +127,9 @@ extension Items: CustomStringConvertible {
 	var description: String {
 		var str = ""
 		items.forEach({ i in
-			str += i.description + "\n"
+			if i.description.count > 0 {
+				str += i.description + "\n"
+			}
 		})
 		return str
 	}
