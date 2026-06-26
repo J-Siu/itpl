@@ -12,6 +12,7 @@ struct Item: CustomStringConvertible {
 
 	// `get` only attributes
 	var artist: String { return item.artist?.name ?? "" }
+	var album: String { return item.album.title ?? "" }
 	var bitrate: Int { return item.bitrate }
 	var fileSize: String {
 		return
@@ -64,6 +65,7 @@ struct Item: CustomStringConvertible {
 			+ "\(bitrate) | "
 			+ "\(persistentID) | "
 			+ "\(artist) | "
+			+ "\(album) | "
 			+ path
 	}
 
