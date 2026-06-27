@@ -34,11 +34,6 @@ extension String {
 
 	// Encapsulate in single quote
 	func quoteSingle() -> String { return "\'\(self)\'" }
-
-	// Source - https://stackoverflow.com/a/54794649
-	// Posted by Danielvgftv, modified by community. See post 'Timeline' for change history
-	// Retrieved 2026-06-06, License - CC BY-SA 4.0
-	func trim() -> String { return self.trimmingCharacters(in: .whitespacesAndNewlines) }
 }
 
-// cspell:words Danielvgftv precomposed
+// cspell:words precomposed
