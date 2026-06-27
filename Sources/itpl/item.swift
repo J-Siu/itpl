@@ -10,7 +10,7 @@ struct Item: CustomStringConvertible {
 		return toStrPathOnly()
 	}
 
-	// `get` only attributes
+	// -- `get` only attributes
 	var artist: String { return item.artist?.name ?? "" }
 	var album: String { return item.album.title ?? "" }
 	var bitrate: Int { return item.bitrate }
@@ -29,6 +29,9 @@ struct Item: CustomStringConvertible {
 	// var persistentID: String { return String(item.persistentID.uint64Value, radix: 16, uppercase: true) }
 	// var persistentID: String { return String(item.persistentID.uintValue, radix: 16, uppercase: true) }
 	var title: String { return item.title }
+	var track: Int { return item.trackNumber }
+	var trackCount: Int { return item.album.trackCount }
+	// --
 
 	init(item: ITLibMediaItem) {
 		self.item = item
@@ -66,6 +69,8 @@ struct Item: CustomStringConvertible {
 			+ "\(persistentID) | "
 			+ "\(artist) | "
 			+ "\(album) | "
+			+ "\(String(track)) | "
+			+ "\(String(trackCount)) | "
 			+ path
 	}
 
