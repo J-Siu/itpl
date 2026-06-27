@@ -1,9 +1,12 @@
 import iTunesLibrary
 
-// An ITLibMediaItem wrapper support output option
+// ITLibMediaItem wrapper supporting
+// - CustomStringConvertible
+// - output options
 struct Item: CustomStringConvertible {
 	let item: ITLibMediaItem
 
+	// -- CustomStringConvertible
 	var description: String {
 		if opts.debug { return toStrDebug() }
 		if opts.duplicate || opts.info { return toStrInfo() }
@@ -31,47 +34,21 @@ struct Item: CustomStringConvertible {
 	var title: String { return item.title }
 	var track: Int { return item.trackNumber }
 	var trackCount: Int { return item.album.trackCount }
-	// --
 
-	init(item: ITLibMediaItem) {
-		self.item = item
-	}
+	// -- Private
 
 	// format filepath base on option
 	private func formatPath(_ path: String) -> String {
 		var p = path
-		if opts.nfc {
-			p = p.nfc()
-		}
-		if opts.basePath != nil {
-			p = p.removeBasePath(basePath: opts.basePath!)
-		}
-		if opts.escapeChar {
-			p = p.escapeChar()
-		}
-		if opts.quoteDouble {
-			p = p.quoteDouble()
-		}
-		if opts.quoteSingle {
-			p = p.quoteSingle()
-		}
+		// --
+		if opts.basePath != nil { p = p.removeBasePath(basePath: opts.basePath!) }
+		if opts.nfc { p = p.nfc() }
+		// --
+		if opts.escapeChar { p = p.escapeChar() }
+		// --
+		if opts.quoteDouble { p = p.quoteDouble() }
+		if opts.quoteSingle { p = p.quoteSingle() }
 		return p
-	}
-
-	// for .m3u playlist
-	private func toStrPathOnly() -> String { return path }
-
-	private func toStrInfo() -> String {
-		return ""
-			+ "\(title) | "
-			+ "\(fileSize) | "
-			+ "\(bitrate) | "
-			+ "\(persistentID) | "
-			+ "\(artist) | "
-			+ "\(album) | "
-			+ "\(String(track)) | "
-			+ "\(String(trackCount)) | "
-			+ path
 	}
 
 	private func toStrDebug() -> String {
@@ -95,6 +72,22 @@ struct Item: CustomStringConvertible {
 		}
 		return str
 	}
+
+	private func toStrInfo() -> String {
+		return ""
+			+ "\(title) | "
+			+ "\(fileSize) | "
+			+ "\(bitrate) | "
+			+ "\(persistentID) | "
+			+ "\(artist) | "
+			+ "\(album) | "
+			+ "\(track) | "
+			+ "\(trackCount) | "
+			+ path
+	}
+
+	// for .m3u playlist
+	private func toStrPathOnly() -> String { return path }
 }
 
 struct Items {
