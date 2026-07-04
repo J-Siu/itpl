@@ -2,15 +2,23 @@ import iTunesLibrary
 
 let itLib = try ITLibrary(apiVersion: "*")
 
-if opts.debug {
-	print("# iTunes API ver : \(itLib.apiMajorVersion).\(itLib.apiMinorVersion)")
-	print("# iTunes version : \(itLib.applicationVersion)")
-	print("# ARGS : Start")
-	CommandLine.arguments.forEach { arg in print(arg) }
-	print("# ARGS : End")
+func printVersion() {
+	print("itpl version: \(Version)")
 }
 
-if opts.name == nil {  // all playlists
+if opts.debug {
+	printVersion()
+	print("# iTunes API ver : \(itLib.apiMajorVersion).\(itLib.apiMinorVersion)")
+	print("# iTunes version : \(itLib.applicationVersion)")
+	print("# -- ARGS : Start")
+	CommandLine.arguments.forEach { arg in print(arg) }
+	print("# -- ARGS : End")
+	print()
+}
+
+if opts.ver {
+	printVersion()
+} else if opts.name == nil {  // all playlists
 	var pl = itLib.allPlaylists
 	if opts.sort { pl.sort(by: { lhs, rhs in lhs.name < rhs.name }) }
 	pl.forEach({ pl in print(pl.name) })

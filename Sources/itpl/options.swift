@@ -41,6 +41,9 @@ struct Options: ParsableArguments {
 	@Flag(name: .customLong("not-found"), help: "Path not found.")
 	var notFound = false
 
+	@Flag(name: .customShort("v"), help: "Version")
+	var ver = false
+
 	@Argument(
 		help: ArgumentHelp("Play list name", discussion: "List all play list if no name is provided."))
 	var name: String?
