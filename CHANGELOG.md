@@ -9,3 +9,11 @@
 - v1.1.0
   - update to swift 6.3
   - refactor inti item, items struct
+- v1.1.3
+  - option
+    - output sort by title
+    - version
+  - track info
+    - add album, track number, track count, item id
+  - code
+    - cleanup, refactor

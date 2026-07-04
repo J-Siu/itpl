@@ -41,7 +41,7 @@ cp .build/release/itpl /usr/local/bin/
 ### Usage
 
 ```sh
-USAGE: options [-i] [-s] [-d] [-r <base path>] [-p <prefix>] [-e] [-n] [--qd] [--qs] [--debug] [<name>]
+USAGE: options [<options>] [<name>]
 
 ARGUMENTS:
   <name>                  Play list name
@@ -59,6 +59,8 @@ OPTIONS:
   --qd                    Path in double quote.
   --qs                    Path in single quote.
   --debug                 Debug mode.
+  --not-found             Path not found.
+  -v                      Version
   -h, --help              Show help information.
 ```
 
