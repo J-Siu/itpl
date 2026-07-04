@@ -24,13 +24,12 @@ struct Item: CustomStringConvertible {
 	var path: String { return formatPath(item.location?.path ?? "") }
 	var persistentID: String {
 		return String(UInt(item.persistentID.uint64Value), radix: 16, uppercase: true)
+		// return String(UInt(item.persistentID.uintValue), radix: 16, uppercase: true)
+		// return String(format: "%016lX", item.persistentID.uint64Value)
+		// return String(format: "%016lX", item.persistentID.uintValue)
+		// return String(item.persistentID.uint64Value, radix: 16, uppercase: true)
+		// return String(item.persistentID.uintValue, radix: 16, uppercase: true)
 	}
-	// var persistentID: NSNumber { return item.persistentID }
-	// var persistentID: String { return String(UInt(item.persistentID.uintValue), radix: 16, uppercase: true) }
-	// var persistentID: String { return String(format: "%016lX", item.persistentID.uint64Value) }
-	// var persistentID: String { return String(format: "%016lX", item.persistentID.uintValue) }
-	// var persistentID: String { return String(item.persistentID.uint64Value, radix: 16, uppercase: true) }
-	// var persistentID: String { return String(item.persistentID.uintValue, radix: 16, uppercase: true) }
 	var title: String { return item.title }
 	var track: Int { return item.trackNumber }
 	var trackCount: Int { return item.album.trackCount }
