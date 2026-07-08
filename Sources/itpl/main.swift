@@ -25,8 +25,11 @@ if opts.ver {
 } else {
 	itLib.allPlaylists.forEach { pl in
 		if pl.name.lowercased() == opts.name?.lowercased() {
-			Items(playlist: pl).items.forEach({ i in if i.description.count > 0 { print(i) } }
-			)
+			Items(playlist: pl).items.forEach({ i in
+				if i.description.count > 0 {
+					print(opts.prefixStr + i.description + opts.postfixStr)
+				}
+			})
 		}
 	}
 }

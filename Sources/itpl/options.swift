@@ -18,16 +18,19 @@ struct Options: ParsableArguments {
 			valueName: "base path"))
 	var basePath: String?
 
-	@Option(
-		name: .customShort("p"),
-		help: ArgumentHelp("Add prefix string to each line.", valueName: "prefix"))
-	var prefixStr = ""
-
 	@Flag(name: .customShort("e"), help: "Escape format.")
 	var escapeChar = false
 
 	@Flag(name: .customShort("n"), help: "Encode path in NFC(Linux) encoding.")
 	var nfc = false
+
+	@Option(
+		name: .customLong("pr"), help: ArgumentHelp("Add prefix string to each line."))
+	var prefixStr = ""
+
+	@Option(
+		name: .customLong("po"), help: ArgumentHelp("Add postfix string to each line."))
+	var postfixStr = ""
 
 	@Flag(name: .customLong("qd"), help: "Path in double quote.")
 	var quoteDouble = false
