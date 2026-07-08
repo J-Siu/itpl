@@ -17,18 +17,17 @@ struct Item: CustomStringConvertible {
 	var artist: String { return item.artist?.name ?? "" }
 	var album: String { return item.album.title ?? "" }
 	var bitrate: Int { return item.bitrate }
+	var duration: String {
+		return
+			"\((Double(item.totalTime) / 1000 / 60).formatted(.number.precision(.fractionLength(2))))min"
+	}
 	var fileSize: String {
 		return
-			"\((Double(item.fileSize) / 1024 / 1024).formatted(.number.precision(.fractionLength(1))))M"
+			"\((Double(item.fileSize) / 1024 / 1024).formatted(.number.precision(.fractionLength(2))))M"
 	}
 	var path: String { return formatPath(item.location?.path ?? "") }
 	var persistentID: String {
 		return String(UInt(item.persistentID.uint64Value), radix: 16, uppercase: true)
-		// return String(UInt(item.persistentID.uintValue), radix: 16, uppercase: true)
-		// return String(format: "%016lX", item.persistentID.uint64Value)
-		// return String(format: "%016lX", item.persistentID.uintValue)
-		// return String(item.persistentID.uint64Value, radix: 16, uppercase: true)
-		// return String(item.persistentID.uintValue, radix: 16, uppercase: true)
 	}
 	var title: String { return item.title }
 	var track: Int { return item.trackNumber }
@@ -77,11 +76,12 @@ struct Item: CustomStringConvertible {
 			+ "\(title)|"
 			+ "\(fileSize)|"
 			+ "\(bitrate)|"
-			+ "\(persistentID)|"
+			+ "\(duration)|"
+			// + "\(persistentID)|"
 			+ "\(artist)|"
 			+ "\(album)|"
-			+ "\(track)|"
-			+ "\(trackCount)|"
+			// + "\(track)|"
+			// + "\(trackCount)|"
 			+ path
 	}
 
