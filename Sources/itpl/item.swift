@@ -74,14 +74,14 @@ struct Item: CustomStringConvertible {
 
 	private func toStrInfo() -> String {
 		return ""
-			+ "\(title) | "
-			+ "\(fileSize) | "
-			+ "\(bitrate) | "
-			+ "\(persistentID) | "
-			+ "\(artist) | "
-			+ "\(album) | "
-			+ "\(track) | "
-			+ "\(trackCount) | "
+			+ "\(title)|"
+			+ "\(fileSize)|"
+			+ "\(bitrate)|"
+			+ "\(persistentID)|"
+			+ "\(artist)|"
+			+ "\(album)|"
+			+ "\(track)|"
+			+ "\(trackCount)|"
 			+ path
 	}
 
