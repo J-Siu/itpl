@@ -7,6 +7,9 @@ struct Options: ParsableArguments {
 	@Flag(name: .customShort("b"), help: "Show original and lowercase + simplified chinese")
 	var both = false
 
+	@Option(name: .customShort("f"), help: ArgumentHelp("Filter by album, artist and title"))
+	var filter: [String] = []
+
 	@Flag(name: .customShort("i"), help: "Info mode")
 	var info = false
 
@@ -30,12 +33,10 @@ struct Options: ParsableArguments {
 	@Flag(name: .customShort("n"), help: "Encode path in NFC(Linux) encoding.")
 	var nfc = false
 
-	@Option(
-		name: .customLong("pr"), help: ArgumentHelp("Add prefix string to each line."))
+	@Option(name: .customLong("pr"), help: ArgumentHelp("Add prefix string to each line."))
 	var prefixStr = ""
 
-	@Option(
-		name: .customLong("po"), help: ArgumentHelp("Add postfix string to each line."))
+	@Option(name: .customLong("po"), help: ArgumentHelp("Add postfix string to each line."))
 	var postfixStr = ""
 
 	@Flag(name: .customLong("qd"), help: "Path in double quote.")

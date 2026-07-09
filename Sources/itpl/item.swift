@@ -135,7 +135,7 @@ struct Items {
 				&& (tmpItems[i].path == "" || FileManager.default.fileExists(atPath: tmpItems[i].path)))
 				&& (add || addNext)
 			{
-				items.append(tmpItems[i])
+				if opts.filter.count == 0 || filter(item: tmpItems[i]) { items.append(tmpItems[i]) }
 				addNext = add && addNext
 			}
 		}
@@ -144,5 +144,16 @@ struct Items {
 	private func mediaItemEqual(item1: Item, item2: Item) -> Bool {
 		if opts.artist { return item1.titleSC + item1.artistSC == item2.titleSC + item2.artistSC }
 		return item1.titleSC == item2.titleSC
+	}
+
+	private func filter(item: Item) -> Bool {
+		var fSC: String
+		for f in opts.filter {
+			fSC = f.t2s()
+			if item.albumSC.contains(fSC) || item.artistSC.contains(fSC) || item.titleSC.contains(fSC) {
+				return true
+			}
+		}
+		return false
 	}
 }
