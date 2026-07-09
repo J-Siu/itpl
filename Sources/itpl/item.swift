@@ -6,6 +6,13 @@ import iTunesLibrary
 struct Item: CustomStringConvertible {
 	let item: ITLibMediaItem
 
+	init(item: ITLibMediaItem) {
+		self.item = item
+		albumSC = (item.album.title ?? "").t2s()
+		artistSC = (item.artist?.name ?? "").t2s()
+		titleSC = (item.title).t2s()
+	}
+
 	// -- CustomStringConvertible
 	var description: String {
 		if opts.debug { return toStrDebug() }
@@ -14,8 +21,10 @@ struct Item: CustomStringConvertible {
 	}
 
 	// -- `get` only attributes
-	var artist: String { return item.artist?.name ?? "" }
 	var album: String { return item.album.title ?? "" }
+	let albumSC: String
+	var artist: String { return item.artist?.name ?? "" }
+	let artistSC: String
 	var bitrate: Int { return item.bitrate }
 	var duration: String {
 		return
@@ -30,6 +39,7 @@ struct Item: CustomStringConvertible {
 		return String(UInt(item.persistentID.uint64Value), radix: 16, uppercase: true)
 	}
 	var title: String { return item.title }
+	let titleSC: String
 	var track: Int { return item.trackNumber }
 	var trackCount: Int { return item.album.trackCount }
 
@@ -103,40 +113,36 @@ struct Items {
 		let count = playlist.items.count
 		var add: Bool = false
 		var addNext: Bool = false
-		var path: String
-		var tmp: [ITLibMediaItem]
+		var tmpItems: [Item] = []
+
+		playlist.items.forEach({ i in tmpItems.append(Item(item: i)) })
 
 		if opts.duplicate || opts.sort {
-			tmp = playlist.items.sorted(by: { lhs, rhs in lhs.title.t2s() < rhs.title.t2s() })
-		} else {
-			tmp = playlist.items
+			tmpItems = tmpItems.sorted(by: { lhs, rhs in lhs.titleSC < rhs.titleSC })
 		}
 
 		for i in 0..<count {
-			path = tmp[i].location?.path ?? ""
-
-			if !opts.duplicate || i < count - 1 && mediaItemEqual(item1: tmp[i], item2: tmp[i + 1]) {
+			if !opts.duplicate
+				|| i < count - 1 && mediaItemEqual(item1: tmpItems[i], item2: tmpItems[i + 1])
+			{
 				add = true
 				addNext = true
 			} else {
 				add = false
 			}
 
-			if !(opts.notFound && (path == "" || FileManager.default.fileExists(atPath: path)))
+			if !(opts.notFound
+				&& (tmpItems[i].path == "" || FileManager.default.fileExists(atPath: tmpItems[i].path)))
 				&& (add || addNext)
 			{
-				items.append(Item(item: tmp[i]))
+				items.append(tmpItems[i])
 				addNext = add && addNext
 			}
 		}
 	}
 
-	// base on opts.artist, check title equal or title+artist equal
-	private func mediaItemEqual(item1: ITLibMediaItem, item2: ITLibMediaItem) -> Bool {
-		if opts.artist {
-			return item1.title.t2s() + (item1.artist?.name ?? "").t2s()
-				== item2.title.t2s() + (item2.artist?.name ?? "").t2s()
-		}
-		return item1.title.t2s() == item2.title.t2s()
+	private func mediaItemEqual(item1: Item, item2: Item) -> Bool {
+		if opts.artist { return item1.titleSC + item1.artistSC == item2.titleSC + item2.artistSC }
+		return item1.titleSC == item2.titleSC
 	}
 }
