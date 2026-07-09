@@ -15,9 +15,7 @@ struct Item: CustomStringConvertible {
 
 	// -- `get` only attributes
 	var artist: String { return item.artist?.name ?? "" }
-	var artistSC: String { return artist.t2s() }
 	var album: String { return item.album.title ?? "" }
-	var albumSC: String { return album.t2s() }
 	var bitrate: Int { return item.bitrate }
 	var duration: String {
 		return
@@ -32,7 +30,6 @@ struct Item: CustomStringConvertible {
 		return String(UInt(item.persistentID.uint64Value), radix: 16, uppercase: true)
 	}
 	var title: String { return item.title }
-	var titleSC: String { return title.t2s() }
 	var track: Int { return item.trackNumber }
 	var trackCount: Int { return item.album.trackCount }
 
@@ -75,16 +72,23 @@ struct Item: CustomStringConvertible {
 	}
 
 	private func toStrInfo() -> String {
+		if opts.both {
+			return ""
+				+ "\(title)|" + "\(title.t2s())|"
+				+ "\(fileSize)|"
+				+ "\(bitrate)|"
+				+ "\(duration)|"
+				+ "\(artist)|" + "\(artist.t2s())|"
+				+ "\(album)|" + "\(album.t2s())|"
+				+ path
+		}
 		return ""
 			+ "\(title)|"
 			+ "\(fileSize)|"
 			+ "\(bitrate)|"
 			+ "\(duration)|"
-			// + "\(persistentID)|"
 			+ "\(artist)|"
 			+ "\(album)|"
-			// + "\(track)|"
-			// + "\(trackCount)|"
 			+ path
 	}
 
@@ -127,6 +131,7 @@ struct Items {
 		}
 	}
 
+	// base on opts.artist, check title equal or title+artist equal
 	private func mediaItemEqual(item1: ITLibMediaItem, item2: ITLibMediaItem) -> Bool {
 		if opts.artist {
 			return item1.title.t2s() + (item1.artist?.name ?? "").t2s()

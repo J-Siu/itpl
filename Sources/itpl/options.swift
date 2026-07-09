@@ -4,6 +4,9 @@ struct Options: ParsableArguments {
 	@Flag(name: .customShort("a"), help: "Check duplicate with artist")
 	var artist = false
 
+	@Flag(name: .customShort("b"), help: "Show original and lowercase + simplified chinese")
+	var both = false
+
 	@Flag(name: .customShort("i"), help: "Info mode")
 	var info = false
 
