@@ -27,7 +27,7 @@ if opts.ver {
 		if pl.name.lowercased() == opts.name?.lowercased() {
 			Items(playlist: pl).items.forEach({ i in
 				if i.description.count > 0 {
-					print(opts.prefixStr + i.description + opts.postfixStr)
+					print(opts.prefixStr + String(describing: i) + opts.postfixStr)
 				}
 			})
 		}
