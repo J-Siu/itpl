@@ -1,16 +1,24 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "swift-argument-parser",
-        "repositoryURL": "https://github.com/apple/swift-argument-parser.git",
-        "state": {
-          "branch": null,
-          "revision": "ca37474853a4b5f59a22c74bfdd449b1f6bc4cc2",
-          "version": "1.8.1"
-        }
+  "originHash" : "511a5359b39e0a0f31d3eda280ef4a4233ed7a9fcc9bd9f272c9669e0b0a642f",
+  "pins" : [
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser.git",
+      "state" : {
+        "revision" : "ca37474853a4b5f59a22c74bfdd449b1f6bc4cc2",
+        "version" : "1.8.1"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "swiftyopencc",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gewill/SwiftyOpenCC.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "53f200cebe40eade3ebda025b0e8980e08cf23fa"
+      }
+    }
+  ],
+  "version" : 3
 }

@@ -15,7 +15,9 @@ struct Item: CustomStringConvertible {
 
 	// -- `get` only attributes
 	var artist: String { return item.artist?.name ?? "" }
+	var artistSC: String { return artist.t2s() }
 	var album: String { return item.album.title ?? "" }
+	var albumSC: String { return album.t2s() }
 	var bitrate: Int { return item.bitrate }
 	var duration: String {
 		return
@@ -30,6 +32,7 @@ struct Item: CustomStringConvertible {
 		return String(UInt(item.persistentID.uint64Value), radix: 16, uppercase: true)
 	}
 	var title: String { return item.title }
+	var titleSC: String { return title.t2s() }
 	var track: Int { return item.trackNumber }
 	var trackCount: Int { return item.album.trackCount }
 
@@ -99,16 +102,15 @@ struct Items {
 		var path: String
 		var tmp: [ITLibMediaItem]
 
+		tmp = playlist.items
 		if opts.duplicate || opts.sort {
-			tmp = playlist.items.sorted(by: { lhs, rhs in lhs.title < rhs.title })
-		} else {
-			tmp = playlist.items
+			tmp = playlist.items.sorted(by: { lhs, rhs in lhs.title.t2s() < rhs.title.t2s() })
 		}
 
 		for i in 0..<count {
 			path = tmp[i].location?.path ?? ""
 
-			if !opts.duplicate || i < count - 1 && tmp[i].title == tmp[i + 1].title {
+			if !opts.duplicate || i < count - 1 && tmp[i].title.t2s() == tmp[i + 1].title.t2s() {
 				add = true
 				addNext = true
 			} else {

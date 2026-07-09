@@ -1,3 +1,12 @@
+import OpenCC
+
+// @MainActor
+struct OCCT2S :@unchecked Sendable{
+let occT2S = try! ChineseConverter(options: [.simplify])
+}
+
+let T2S = OCCT2S()
+
 extension String {
 	// Escape characters
 	func escapeChar() -> String {
@@ -34,6 +43,8 @@ extension String {
 
 	// Encapsulate in single quote
 	func quoteSingle() -> String { return "\'\(self)\'" }
+
+	func t2s() -> String { return T2S.occT2S.convert(self) }
 }
 
-// cspell:words precomposed
+// cspell:words precomposed OCCT
