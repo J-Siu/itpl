@@ -102,15 +102,16 @@ struct Items {
 		var path: String
 		var tmp: [ITLibMediaItem]
 
-		tmp = playlist.items
 		if opts.duplicate || opts.sort {
 			tmp = playlist.items.sorted(by: { lhs, rhs in lhs.title.t2s() < rhs.title.t2s() })
+		} else {
+			tmp = playlist.items
 		}
 
 		for i in 0..<count {
 			path = tmp[i].location?.path ?? ""
 
-			if !opts.duplicate || i < count - 1 && tmp[i].title.t2s() == tmp[i + 1].title.t2s() {
+			if !opts.duplicate || i < count - 1 && mediaItemEqual(item1: tmp[i], item2: tmp[i + 1]) {
 				add = true
 				addNext = true
 			} else {
@@ -124,5 +125,13 @@ struct Items {
 				addNext = add && addNext
 			}
 		}
+	}
+
+	private func mediaItemEqual(item1: ITLibMediaItem, item2: ITLibMediaItem) -> Bool {
+		if opts.artist {
+			return item1.title.t2s() + (item1.artist?.name ?? "").t2s()
+				== item2.title.t2s() + (item2.artist?.name ?? "").t2s()
+		}
+		return item1.title.t2s() == item2.title.t2s()
 	}
 }
