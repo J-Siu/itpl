@@ -15,9 +15,8 @@ struct Item: CustomStringConvertible {
 
 	// -- CustomStringConvertible
 	var description: String {
-		if opts.debug { return toStrDebug() }
-		if opts.duplicate || opts.info { return toStrInfo() }
-		return toStrPathOnly()
+		if opts.duplicate || opts.info { return toStrDebug() + toStrInfo() }
+		return toStrDebug() + toStrPathOnly()
 	}
 
 	// -- `get` only attributes
@@ -60,6 +59,7 @@ struct Item: CustomStringConvertible {
 	}
 
 	private func toStrDebug() -> String {
+		if !opts.debug { return "" }
 		var str =
 			""
 			+ "# ---\n"
@@ -76,7 +76,7 @@ struct Item: CustomStringConvertible {
 				pathComponents += "|" + p
 			}
 			pathComponents += "|"
-			str += "# PathComp : " + pathComponents
+			str += "# PathComp : " + pathComponents + "\n"
 		}
 		return str
 	}
